@@ -33,7 +33,10 @@ async def process_buy_cinema(callback_query: types.CallbackQuery):
 
     await bot.send_message(
         callback_query.from_user.id,
-        text="*Қанша билет алғыңыз келеді? Билет саны көп болған сайын ұтыста жеңу ықтималдығы жоғары 😉*",
+        text="""*Қанша номерок алғыңыз келеді?
+Цифрмен жазыңыз👇🏻
+Номерок көп болған сайын курсқа
+доступ көбейеді, және көлік иесі болу мүмкіндігі жоғары🔥*""",
         parse_mode="Markdown",
         reply_markup=btn.digits_and_cancel()
     ) 
@@ -113,7 +116,7 @@ async def start_handler(message: types.Message):
     print(message.from_user.id)
       
     from datetime import datetime
-    fileId = "BAACAgIAAxkBAAMbZyYiIKdnYAhaMDvwp6bckE-c6-4AAtFbAALQzjBJQEXId-9sVs42BA"
+    fileId = "AgACAgIAAxkBAAM2ZyqsMcOMY4neGp3t-X2yaduSDzYAApbwMRu60lFJHQ7Lqp4MY34BAAMCAAN5AAM2BA"
 
     user_id = message.from_user.id
     user_name = f"@{message.from_user.username}"
@@ -122,43 +125,63 @@ async def start_handler(message: types.Message):
     db.JustInsert(user_id, user_name, time_now)  
     
     if db.CheckUserPaid(message.from_user.id) == True:
-        await bot.send_video(
+        await bot.send_photo(
             message.from_user.id,
             fileId,
-            caption="""*Ассалаумағалейкум, бұл менің яғни Рамазан Амантайдың “Хотя бы кинода 3” фильмін жоғарғы сапада көруіңіз үшін ашылған ресми телеграм бот!✔️
+            caption="""*Сәлеметсізбе құттықтаймыз?!😍
 
-“Хотя бы кинода 3” -  фильмін көргеніңіз үшін Алматы қаласынан 2 бөлмелі камфорт класстағы квартираны, 4 көлікті және 50 адамға 100 мың теңгеден сыйламақшымын! Киномды көру үшін “КИНОНЫ САТЫП АЛУ” кнопкасын басыңыз. 
+Сіз Кенбаева Айжамалдың авторлық “Кондитер бол” курсына қатыса отыра, құны 30.000.000🍋тұратын LEXUS GX 460 автокөлігінің иесі болуға шешім қабылдадыңыз🔥
 
-Сәттілік жолдасыңыз болсын, қолдау білдіріп жатқаныңызға рахмет көрерменім!✊🏻*""",
+Курс құны : 1000 - ақ теңге😱
+Және курсқа доступ көбейте отыра, Автокөлікке де мүмкіндігіңізді көбейте аласыз‼️
+Яғни,👇🏻
+2000 тг - 10 номерок алып курсқа
+(1 ай доступ)
+5000 тг - 25 номерок алып курсқа
+(2 ай доступ)
+10000 тг - 50 номерок алып курсқа (шексіз доступ) ие боласыз, әрі автокөлікке мүмкіндігіңіз артады👏🏻
+
+“Кондитер бол” курсында 6 түрлі торт рецепттерінің онлайн-видео нұсқасы беріледі.
+🔺Дубайский шоколад
+🔺Дубайский чизкейк
+🔺Нутелла торт
+🔺Тары чизкейк
+🔺Milka торт
+🔺Баноффипай Тарталетки*""",
             parse_mode="Markdown",
             protect_content=True,
             reply_markup=btn.menu(),
         )
-        await bot.send_message(
-            message.from_user.id,
-            text="*Құрметті кино сүйер қауым бізді жоғалтып алмау үшін https://t.me/+69HQcxuN2uBlYzUy телеграмм каналаға және t.me/ramazan_amanatai_reserve_bot ботқа тіркеліп қойыңыздар*",
-            parse_mode="Markdown",
-        )
         return
 
-    await bot.send_video(
+    await bot.send_photo(
         message.from_user.id,
         fileId,
-        caption="""*Ассалаумағалейкум, бұл менің яғни Рамазан Амантайдың “Хотя бы кинода 3” фильмін жоғарғы сапада көруіңіз үшін ашылған ресми телеграм бот!✔️
+        caption="""*Сәлеметсізбе құттықтаймыз?!😍
 
-“Хотя бы кинода 3” -  фильмін көргеніңіз үшін Алматы қаласынан 2 бөлмелі камфорт класстағы квартираны, 4 көлікті және 50 адамға 100 мың теңгеден сыйламақшымын! Киномды көру үшін “КИНОНЫ САТЫП АЛУ” кнопкасын басыңыз. 
+Сіз Кенбаева Айжамалдың авторлық “Кондитер бол” курсына қатыса отыра, құны 30.000.000🍋тұратын LEXUS GX 460 автокөлігінің иесі болуға шешім қабылдадыңыз🔥
 
-Сәттілік жолдасыңыз болсын, қолдау білдіріп жатқаныңызға рахмет көрерменім!✊🏻*""",        
+Курс құны : 1000 - ақ теңге😱
+Және курсқа доступ көбейте отыра, Автокөлікке де мүмкіндігіңізді көбейте аласыз‼️
+Яғни,👇🏻
+2000 тг - 10 номерок алып курсқа
+(1 ай доступ)
+5000 тг - 25 номерок алып курсқа
+(2 ай доступ)
+10000 тг - 50 номерок алып курсқа (шексіз доступ) ие боласыз, әрі автокөлікке мүмкіндігіңіз артады👏🏻
+
+“Кондитер бол” курсында 6 түрлі торт рецепттерінің онлайн-видео нұсқасы беріледі.
+🔺Дубайский шоколад
+🔺Дубайский чизкейк
+🔺Нутелла торт
+🔺Тары чизкейк
+🔺Milka торт
+🔺Баноффипай Тарталетки*""",        
         parse_mode="Markdown",
         protect_content=True,
         reply_markup=btn.buy_cinema(),
     )
 
-    await bot.send_message(
-        message.from_user.id,
-        text="*Құрметті кино сүйер қауым бізді жоғалтып алмау үшін https://t.me/+69HQcxuN2uBlYzUy телеграмм каналаға және t.me/ramazan_amanatai_reserve_bot ботқа тіркеліп қойыңыздар*",
-        parse_mode="Markdown",
-    )
     
              
 @dp.message_handler(content_types=[types.ContentType.PHOTO, types.ContentType.VIDEO])
@@ -210,7 +233,7 @@ async def handler(message: types.Message):
 
     await bot.send_message(
         message.from_user.id,
-        text="""*https://wa.me/87086914391*""",
+        text="""*https://wa.me/87471850499*""",
         parse_mode="Markdown",
     ) 
 
@@ -263,18 +286,21 @@ async def handler(message: types.Message):
 
     await bot.send_message(
         message.from_user.id,
-        text="""*@senior_coffee_drinker*\n\nhttps://wa.me/77086914391""",
+        text="""*@senior_coffee_drinker*\n""",
         parse_mode="Markdown",
     ) 
 
-
-@dp.message_handler(Text(equals="🎬 Қайтадан киноны сатып алу"), content_types=['text'])
+@dp.message_handler(commands=['buy'])
+@dp.message_handler(Text(equals="📹 Қайтадан 📗 курс сатып алу"), content_types=['text'])
 async def handler(message: types.Message):
     
     await Forma.s1.set()
     await bot.send_message(
             message.from_user.id,
-            text="*Қанша билет алғыңыз келеді 😉?*",
+            text="""Қанша номерок алғыңыз келеді?
+Цифрмен жазыңыз👇🏻
+Номерок көп болған сайын курсқа
+доступ көбейеді, және көлік иесі болу мүмкіндігі жоғары🔥""",
             parse_mode="Markdown",
             reply_markup=btn.digits_and_cancel()
     )
@@ -303,15 +329,18 @@ async def pdf_received_handler(message: types.Message, state: FSMContext):
         # Если отправлен не PDF-файл, можно уведомить пользователя
         await message.reply("Тек, PDF файл жіберу керек!")
     
-
 """
+
 @dp.message_handler(Text(equals="🎬 Киноны сатып алу"), content_types=['text'])
 async def handler(message: types.Message):
     
     await Forma.s1.set()
     await bot.send_message(
             message.from_user.id,
-            text="*Қанша билет алғыңыз келеді? Билет саны көп болған сайын ұтыста жеңу ықтималдығы жоғары 😉*",
+            text="""*Қанша номерок алғыңыз келеді?
+Цифрмен жазыңыз👇🏻
+Номерок көп болған сайын курсқа
+доступ көбейеді, және көлік иесі болу мүмкіндігі жоғары🔥*""",
             parse_mode="Markdown",
             reply_markup=btn.digits_and_cancel()
     ) 
@@ -367,69 +396,66 @@ async def handler(message: types.Message):
     )
 
 
-@dp.message_handler(commands=['cinema'])
-@dp.message_handler(Text(equals="🎞 Movie"), content_types=['text'])
+@dp.message_handler(commands=['subjects'])
+@dp.message_handler(Text(equals="📹 Курс сабақтары"), content_types=['text'])
 async def handler(message: types.Message):
 
     if message.from_user.id == admin:
-        cinema_capture = "AgACAgIAAxkBAAMLZyYfyW99I3vVDWIvAAHlhHep7QWgAAKl4TEb0M4wSQ24B5FVHE2jAQADAgADeQADNgQ"
-        cinema = "BAACAgIAAxkBAAMJZyYe7_WEAS_hyBFZjzgQDO7qnAkAAlBbAAKOvjFJsU2nPCIK1Wg2BA"
-
-        # Создаем список медиафайлов для отправки
-        media = [
-            InputMediaPhoto(
-                media=cinema_capture,
-                parse_mode="Markdown",
-                protect_content=True
-            ),
-            InputMediaVideo(
-                media=cinema,
-                caption="*Хотя Бы Кинода 3*",  # Если нужно добавить подпись
-                parse_mode="Markdown",
-                protect_content=True
-            ),
+        # Первая группа медиафайлов
+        media_group_1 = [
+            InputMediaPhoto(media="AgACAgIAAxkBAAMeZyqoL2hcPlVl9zI4CuqW5m3R12sAAorwMRu60lFJ5hIbmqGY8gYBAAMCAAN5AAM2BA", protect_content=True),
+            InputMediaVideo(media="BAACAgIAAxkBAAMOZyqe_nfopY8Q5-1w_WeTC7154m8AAjlnAAK60lFJ6L_NUPBTXrQ2BA", caption="*Дубайский чизкейк*", parse_mode="Markdown", protect_content=True),
+            InputMediaPhoto(media="AgACAgIAAxkBAAMmZyqo72O6rOIDWCHVynSI-4-Ib8kAAo7wMRu60lFJNxy3QvbEieABAAMCAAN5AAM2BA", protect_content=True),
+            InputMediaVideo(media="BAACAgIAAxkBAAMQZyqfeZNNl5pHS26pJUFDMqCBz-EAAjpnAAK60lFJkWKyJ47LKKc2BA", caption="*Баноффипай Тарталетки*", parse_mode="Markdown", protect_content=True),
+            InputMediaPhoto(media="AgACAgIAAxkBAAMgZyqoVJ_aJdlmTsTeZNd_zSXrJnIAAovwMRu60lFJYJxv0s3qK2oBAAMCAAN5AAM2BA", protect_content=True),
+            InputMediaVideo(media="BAACAgIAAxkBAAMSZyqfo_h18m4nswMZ1s39vYVw9zYAAjtnAAK60lFJvOXjvcm9ESM2BA", caption="*Дубайский шоколад*", parse_mode="Markdown", protect_content=True)
         ]
 
-        # Отправляем медиафайлы как альбом
+        # Вторая группа медиафайлов
+        media_group_2 = [
+            InputMediaPhoto(media="AgACAgIAAxkBAAMkZyqo0Z5XS8VdmQ5bGm1NkCq7U6oAAo3wMRu60lFJ22Wq-hMCB7ABAAMCAAN5AAM2BA", protect_content=True),
+            InputMediaVideo(media="BAACAgIAAxkBAAMUZyqgEINrfKiWiimkNEzKijzyDZIAAj1nAAK60lFJbBRFB-tfEUQ2BA", caption="*Тарымен чизкейк*", parse_mode="Markdown", protect_content=True),
+            InputMediaPhoto(media="AgACAgIAAxkBAAMaZyqndQUGGZtSINCdZxmGwXTSdBYAAofwMRu60lFJfbNFd-RW6JcBAAMCAAN5AAM2BA", protect_content=True),
+            InputMediaVideo(media="BAACAgIAAxkBAAMWZyqgkGfWka-1f_eWUNiyI8f81rwAAj5nAAK60lFJVlhlilAwuYo2BA", caption="*Нутелла торт*", parse_mode="Markdown", protect_content=True),
+            InputMediaPhoto(media="AgACAgIAAxkBAAMiZyqon452oco0ASVyHGqI1SRQXlkAAozwMRu60lFJv8e6Y5TV2dABAAMCAAN5AAM2BA", protect_content=True),
+            InputMediaVideo(media="BAACAgIAAxkBAAMYZyqg2oywORWXAAEISx_bnPWMnHdqAAI_ZwACutJRSSPOQsKLE7CaNgQ", caption="*Milka торт*", parse_mode="Markdown", protect_content=True)
+        ]
+
+        # Отправляем первую группу медиафайлов
         await bot.send_media_group(
             chat_id=message.from_user.id,
-            media=media,
+            media=media_group_1,
+            protect_content=True
+        )
+
+        # Отправляем вторую группу медиафайлов
+        await bot.send_media_group(
+            chat_id=message.from_user.id,
+            media=media_group_2,
             protect_content=True
         )
         return
 
-    if db.CheckUserPaid(message.from_user.id) == True:
-        cinema_capture = "AgACAgIAAxkBAAMLZyYfyW99I3vVDWIvAAHlhHep7QWgAAKl4TEb0M4wSQ24B5FVHE2jAQADAgADeQADNgQ"
-        cinema = "BAACAgIAAxkBAAMJZyYe7_WEAS_hyBFZjzgQDO7qnAkAAlBbAAKOvjFJsU2nPCIK1Wg2BA"
-
-        # Создаем список медиафайлов для отправки
-        media = [
-            InputMediaPhoto(
-                media=cinema_capture,
-                parse_mode="Markdown",
-                protect_content=True
-            ),
-            InputMediaVideo(
-                media=cinema,
-                caption="*Хотя Бы Кинода 3*",  # Если нужно добавить подпись
-                parse_mode="Markdown",
-                protect_content=True
-            ),
-        ]
-
-        # Отправляем медиафайлы как альбом
+    if db.CheckUserPaid(message.from_user.id):
+        # Повторяем для платного пользователя
         await bot.send_media_group(
             chat_id=message.from_user.id,
-            media=media,
+            media=media_group_1,
             protect_content=True
         )
-    
-    await bot.send_message(
-        message.from_user.id,
-        text="Кино сатып алыңыз.",
-        reply_markup=btn.buy_cinema()
-    )
-    
+
+        await bot.send_media_group(
+            chat_id=message.from_user.id,
+            media=media_group_2,
+            protect_content=True
+        )
+    else:
+        await bot.send_message(
+            message.from_user.id,
+            text="Курсты сатып алыңыз!.",
+            reply_markup=btn.buy_cinema()
+        )
+  
 
 
 @dp.message_handler(Text(equals="🎁 Сыйлықтар"), content_types=['text'])

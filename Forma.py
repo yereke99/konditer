@@ -80,44 +80,23 @@ async def handler(message: types.Message, state: FSMContext):
         async with state.proxy() as data:
             data['sum'] = sum
         
-        media = [
-            InputMediaPhoto(
-                media=c1,
-                caption="""*Инструкция:
+        await bot.send_message(
+            message.from_user.id,
+            text="""*Инструкция:
 
-Оплата жасау үшін сілтемеге өтіңіз: https://pay.kaspi.kz/pay/0wdcrpat
-Мұнде міндетті түрде 2000 теңге төлену керек. Басқа сумма төлеп қойсаңыз, бот оқымайды және ақшаңыз қайтпайды. Қателеспей төлеңіз!
+Оплата жасау үшін сілтемеге өтіңіз: https://pay.kaspi.kz/pay/czlpep9g
+Мұнде міндетті түрде 1000 теңге төлену керек. Басқа сумма төлеп қойсаңыз, бот оқымайды және ақшаңыз қайтпайды. Қателеспей төлеңіз!
 
-1. Төлем жасап болған соң чекті ПДФ файл арқылы жіберіңіз( фотода көрсетілгендей)
+1. Төлем жасап болған соң чекті ПДФ файл арқылы жіберіңіз
 
-2. Төленетін сумма 2000 теңгенің біреуі болу керек
+2. Төленетін сумма 1000, 4000, 8000 теңгенің біреуі болу керек
 
 3. Төлем өткен соң бот сізге киноға билет нөмеріңізбен, киноларды жібереді
 
 ПДФ файлымен чекті төменге жіберіңіз  👇*""",
-                parse_mode="Markdown",
-                protect_content=True
-            ),
-            InputMediaPhoto(
-                media=c2,
-                parse_mode="Markdown",
-                protect_content=True
-            ),
-            InputMediaPhoto(
-                media=c3,
-                parse_mode="Markdown",
-                protect_content=True
-            ),
-        ]
+            parse_mode="Markdown",
+        ) 
 
-        # Отправляем медиафайлы как альбом
-        await bot.send_media_group(
-            chat_id=message.from_user.id,
-            media=media,
-            protect_content=True
-        )
-
-        
         await bot.send_message(
             message.from_user.id,
             text="*Kaspi Pay - төлем жүйесін қолдана отыра 💳 төлем жасаңыз\nКиноның 💳 бағасы: %d теңге*"%sum,
@@ -130,7 +109,10 @@ async def handler(message: types.Message, state: FSMContext):
         await Forma.s1.set()
         await bot.send_message(
             message.from_user.id,
-            text="*Қанша билет алғыңыз келеді? Билет саны көп болған сайын ұтыста жеңу ықтималдығы жоғары 😉*",
+            text="""*Қанша номер алғыңыз келеді?
+Цифрмен жазыңыз👇🏻
+Номерок көп болған сайын курсқа
+доступ көбейеді, және көлік иесі болу мүмкіндігі жоғары*""",
             parse_mode="Markdown",
             reply_markup=btn.digits_and_cancel()
         )   
@@ -187,7 +169,7 @@ async def handler(message: types.Message, state: FSMContext):
         
         print(data['pdf_result'][4])
 
-        if data['pdf_result'][4] == "Сатушының ЖСН/БСН 011225600097" or data['pdf_result'][4] == "ИИН/БИН продавца 011225600097":
+        if data['pdf_result'][4] == "Сатушының ЖСН/БСН 020319550979" or data['pdf_result'][4] == "ИИН/БИН продавца 020319550979":
         
             if db.CheckLoto(data['pdf_result'][3]) == True:
                 await bot.send_message(
@@ -225,7 +207,7 @@ async def handler(message: types.Message, state: FSMContext):
         await Forma.s2.set()
         await bot.send_message(
                 message.from_user.id,
-                text="Төлем жасаған соң чекті 📲 .pdf форматында жіберіңіз!\n\n*НАЗАР АУДАРЫҢЫЗ ЧЕКТІ МОДЕРАТОР ТЕКСЕРЕДІ\n\n ЕСКЕРТУ ❗️\nЖАЛҒАН ЧЕК ЖІБЕРУ НЕМЕСЕ БАСҚАДА ДҰЫРЫС ЕМЕС ЧЕКТЕР ЖІБЕРУ АВТОМАТТЫ ТҮРДЕ ҰТЫС ОЙЫННАН ШЫҒАРЫЛАДЫ*",
+                text="Төлем жасаған соң чекті 📲 .pdf форматында жіберіңіз!\n\n*НАЗАР АУДАРЫҢЫЗ ЧЕКТІ МОДЕРАТОР ТЕКСЕРЕДІ\n\n ЕСКЕРТУ ❗️\nЖАЛҒАН ЧЕК ЖІБЕРУ НЕМЕСЕ БАСҚАДА ДҰЫРЫС ЕМЕС ЧЕКТЕР ЖІБЕРУ КУРС САБАҚТАРЫНА ҚАТЫСТЫРЫЛМАЙДЫ*",
                 parse_mode="Markdown",
                 reply_markup=btn.cancel()
             ) 
@@ -256,34 +238,43 @@ async def handler(message: types.Message, state: FSMContext):
                 time_now,
             )
 
-        cinema_capture = "AgACAgIAAxkBAAMLZyYfyW99I3vVDWIvAAHlhHep7QWgAAKl4TEb0M4wSQ24B5FVHE2jAQADAgADeQADNgQ"
-        cinema = "BAACAgIAAxkBAAMJZyYe7_WEAS_hyBFZjzgQDO7qnAkAAlBbAAKOvjFJsU2nPCIK1Wg2BA"
-
-        # Создаем список медиафайлов для отправки
-        media = [
-            InputMediaPhoto(
-                media=cinema_capture,
-                parse_mode="Markdown",
-                protect_content=True
-            ),
-            InputMediaVideo(
-                media=cinema,
-                caption="*Хотя Бы Кинода 3*",  # Если нужно добавить подпись
-                parse_mode="Markdown",
-                protect_content=True
-            ),
+         # Первая группа медиафайлов
+        media_group_1 = [
+            InputMediaPhoto(media="AgACAgIAAxkBAAMeZyqoL2hcPlVl9zI4CuqW5m3R12sAAorwMRu60lFJ5hIbmqGY8gYBAAMCAAN5AAM2BA", protect_content=True),
+            InputMediaVideo(media="BAACAgIAAxkBAAMOZyqe_nfopY8Q5-1w_WeTC7154m8AAjlnAAK60lFJ6L_NUPBTXrQ2BA", caption="*Дубайский чизкейк*", parse_mode="Markdown", protect_content=True),
+            InputMediaPhoto(media="AgACAgIAAxkBAAMmZyqo72O6rOIDWCHVynSI-4-Ib8kAAo7wMRu60lFJNxy3QvbEieABAAMCAAN5AAM2BA", protect_content=True),
+            InputMediaVideo(media="BAACAgIAAxkBAAMQZyqfeZNNl5pHS26pJUFDMqCBz-EAAjpnAAK60lFJkWKyJ47LKKc2BA", caption="*Баноффипай Тарталетки*", parse_mode="Markdown", protect_content=True),
+            InputMediaPhoto(media="AgACAgIAAxkBAAMgZyqoVJ_aJdlmTsTeZNd_zSXrJnIAAovwMRu60lFJYJxv0s3qK2oBAAMCAAN5AAM2BA", protect_content=True),
+            InputMediaVideo(media="BAACAgIAAxkBAAMSZyqfo_h18m4nswMZ1s39vYVw9zYAAjtnAAK60lFJvOXjvcm9ESM2BA", caption="*Дубайский шоколад*", parse_mode="Markdown", protect_content=True)
         ]
 
-        # Отправляем медиафайлы как альбом
+        # Вторая группа медиафайлов
+        media_group_2 = [
+            InputMediaPhoto(media="AgACAgIAAxkBAAMkZyqo0Z5XS8VdmQ5bGm1NkCq7U6oAAo3wMRu60lFJ22Wq-hMCB7ABAAMCAAN5AAM2BA", protect_content=True),
+            InputMediaVideo(media="BAACAgIAAxkBAAMUZyqgEINrfKiWiimkNEzKijzyDZIAAj1nAAK60lFJbBRFB-tfEUQ2BA", caption="*Тарымен чизкейк*", parse_mode="Markdown", protect_content=True),
+            InputMediaPhoto(media="AgACAgIAAxkBAAMaZyqndQUGGZtSINCdZxmGwXTSdBYAAofwMRu60lFJfbNFd-RW6JcBAAMCAAN5AAM2BA", protect_content=True),
+            InputMediaVideo(media="BAACAgIAAxkBAAMWZyqgkGfWka-1f_eWUNiyI8f81rwAAj5nAAK60lFJVlhlilAwuYo2BA", caption="*Нутелла торт*", parse_mode="Markdown", protect_content=True),
+            InputMediaPhoto(media="AgACAgIAAxkBAAMiZyqon452oco0ASVyHGqI1SRQXlkAAozwMRu60lFJv8e6Y5TV2dABAAMCAAN5AAM2BA", protect_content=True),
+            InputMediaVideo(media="BAACAgIAAxkBAAMYZyqg2oywORWXAAEISx_bnPWMnHdqAAI_ZwACutJRSSPOQsKLE7CaNgQ", caption="*Milka торт*", parse_mode="Markdown", protect_content=True)
+        ]
+
+        # Отправляем первую группу медиафайлов
         await bot.send_media_group(
             chat_id=message.from_user.id,
-            media=media,
+            media=media_group_1,
+            protect_content=True
+        )
+
+        # Отправляем вторую группу медиафайлов
+        await bot.send_media_group(
+            chat_id=message.from_user.id,
+            media=media_group_2,
             protect_content=True
         )
 
         await bot.send_message(
             message.from_user.id,
-            text="*Құттықтаймыз сіз сәтті төлем жасадыңыз 👏\n\nҰтыс билеттерінің санын білу үшін \n🧧 Ұтыс билеттерім түймесін басыңыз 👇*",
+            text="*Құттықтаймыз сіз сәтті төлем жасадыңыз 👏\n\nКурс номерлерінің санын білу үшін \n🧧 Ұтыс билеттерім түймесін басыңыз 👇*",
             parse_mode="Markdown",
             reply_markup=btn.menu()
         )

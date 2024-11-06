@@ -20,14 +20,14 @@ class Button:
     def payment(self):
 
         keyboard = types.InlineKeyboardMarkup()
-        keyboard.add(types.InlineKeyboardButton("💳 Төлем жасау", url="https://pay.kaspi.kz/pay/0wdcrpat"))
+        keyboard.add(types.InlineKeyboardButton("💳 Төлем жасау", url="https://pay.kaspi.kz/pay/czlpep9g"))
         
         return keyboard
     
     def buy_cinema(self):
 
         keyboard = types.InlineKeyboardMarkup()
-        keyboard.add(types.InlineKeyboardButton("🎞 💳 Киноны сатып алу", callback_data="buy_cinema"))
+        keyboard.add(types.InlineKeyboardButton("📗 💳 Курс сатып алу", callback_data="buy_cinema"))
         
         return keyboard
     
@@ -35,15 +35,15 @@ class Button:
     def menu(self):
         return self._create_keyboard([
             "🧧 Ұтыс билеттерім",
-            "🎞 Movie",
-            "🎬 Қайтадан киноны сатып алу",
+            "📹 Курс сабақтары",
+            "📹 Қайтадан 📗 курс сатып алу",
             "📨 Әкімшіге хабарлама",
             "📲 Байланыс номері",  
         ])
 
     def again(self):
         return self._create_keyboard([
-            "🎬 Қайтадан киноны сатып алу"
+            "📹 Қайтадан 📗 курс сатып алу"
         ])
        
 
