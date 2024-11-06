@@ -20,6 +20,33 @@ from config import*
 import os
 from aiogram.types import InputMediaPhoto, InputMediaVideo
 
+from test import PDFReaders
+
+
+
+
+def calculate_sum(count):
+    # Сопоставление количества номеров и суммы
+    prices = {
+        5: 1000,
+        10: 2000,
+        15: 3000,
+        20: 4000,
+        25: 5000,
+        30: 6000,
+        35: 7000,
+        40: 8000,
+        45: 9000,
+        50: 10000,
+        100: 20000,
+        200: 40000,
+        250: 50000,
+        500: 100000
+    }
+    return prices.get(count, 0)
+
+
+
 generator = Generator()
 btn = Button()
 db = Database()
@@ -62,23 +89,30 @@ async def cancell_handler(message: types.Message, state: FSMContext):
 async def handler(message: types.Message):
     return await message.reply("Сандармен жазыңыз 🔢")
 
-
 @dp.message_handler(lambda message: message.text.isdigit(), state=Forma.s1)
 async def handler(message: types.Message, state: FSMContext):
-
     """
     state: number
     """
     try:
         await Forma.next()
 
+        with open("/home/konditer/doc/offerta.pdf", 'rb') as doc:
+            await bot.send_document(
+            message.from_user.id,
+            doc,
+            caption="*📄 Оффертамен танысып алыңыз*",
+            parse_mode="Markdown",
+        )
+
         async with state.proxy() as data:
             data['count'] = int(message.text)
 
-        sum = 2000 * data['count']
+        # Вычисляем сумму с помощью функции calculate_sum
+        total_sum = calculate_sum(data['count'])
 
         async with state.proxy() as data:
-            data['sum'] = sum
+            data['sum'] = total_sum
         
         await bot.send_message(
             message.from_user.id,
@@ -89,9 +123,9 @@ async def handler(message: types.Message, state: FSMContext):
 
 1. Төлем жасап болған соң чекті ПДФ файл арқылы жіберіңіз
 
-2. Төленетін сумма 1000, 4000, 8000 теңгенің біреуі болу керек
+2. Төленетін сумма 1000, 2000, 5000 теңгенің біреуі болу керек
 
-3. Төлем өткен соң бот сізге киноға билет нөмеріңізбен, киноларды жібереді
+3. Төлем өткен соң бот сізге  нөмеріңізбен бейне сабақтарды жібереді
 
 ПДФ файлымен чекті төменге жіберіңіз  👇*""",
             parse_mode="Markdown",
@@ -99,7 +133,7 @@ async def handler(message: types.Message, state: FSMContext):
 
         await bot.send_message(
             message.from_user.id,
-            text="*Kaspi Pay - төлем жүйесін қолдана отыра 💳 төлем жасаңыз\nКиноның 💳 бағасы: %d теңге*"%sum,
+            text="*Kaspi Pay - төлем жүйесін қолдана отыра 💳 төлем жасаңыз\nКиноның 💳 бағасы: %d теңге*"%total_sum,
             parse_mode="Markdown",
             reply_markup=btn.payment()
         ) 
@@ -121,6 +155,7 @@ async def handler(message: types.Message, state: FSMContext):
             admin,
             text="Error: %s"%str(e),
         )   
+
 
 @dp.message_handler(lambda message: not (message.document and message.document.mime_type == 'application/pdf'), state=Forma.s2, content_types=types.ContentType.DOCUMENT)
 async def pdf_validator(message: types.Message, state: FSMContext):
@@ -145,9 +180,10 @@ async def handler(message: types.Message, state: FSMContext):
         await bot.download_file(file_info.file_path, file_path)
 
         # Process the PDF file
-        pdf_reader = PDFReader(file_path)
+        pdf_reader = PDFReaders(file_path)
         pdf_reader.open_pdf()
-        result = pdf_reader.extract_specific_info()
+        #result = pdf_reader.extract_specific_info()
+        result = pdf_reader.extract_detailed_info()
         pdf_reader.close_pdf()
 
 
@@ -157,7 +193,7 @@ async def handler(message: types.Message, state: FSMContext):
             data['fileName'] = file_name
 
         print(data['pdf_result'])
-        if convert_currency_to_int(data['pdf_result'][2]) != data['sum']: 
+        if convert_currency_to_int(data['pdf_result'][3]) != data['sum']: 
             await bot.send_message(
                 message.from_user.id,
                 text="*Төленетін сумма қате!\nҚайталап көріңіз*",
@@ -167,11 +203,11 @@ async def handler(message: types.Message, state: FSMContext):
             await state.finish() 
             return
         
-        print(data['pdf_result'][4])
+        print(data['pdf_result'][3])
 
-        if data['pdf_result'][4] == "Сатушының ЖСН/БСН 020319550979" or data['pdf_result'][4] == "ИИН/БИН продавца 020319550979":
+        if data['pdf_result'][11] == "Сатушының ЖСН/БСН 020319550979" or data['pdf_result'][11] == "ИИН/БИН продавца 020319550979":
         
-            if db.CheckLoto(data['pdf_result'][3]) == True:
+            if db.CheckLoto(data['pdf_result'][7]) == True:
                 await bot.send_message(
                     message.from_user.id,
                     text="*ЧЕК ТӨЛЕНІП ҚОЙЫЛҒАН!\nҚайталап көріңіз*",
@@ -231,7 +267,7 @@ async def handler(message: types.Message, state: FSMContext):
             db.InsertLoto(
                 message.from_user.id,
                 gen,
-                data['pdf_result'][3],
+                data['pdf_result'][7],
                 message.from_user.username,
                 data['fileName'],  
                 data['contact'],

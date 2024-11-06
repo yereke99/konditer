@@ -17,6 +17,8 @@ from FormaAdmin import*
 from aiogram.types import InputMediaPhoto, InputMediaVideo
 
 
+
+
 generator = Generator()
 btn = Button()
 db = Database()
@@ -28,19 +30,42 @@ async def process_buy_cinema(callback_query: types.CallbackQuery):
     await bot.delete_message(callback_query.message.chat.id, callback_query.message.message_id)
 
     await bot.answer_callback_query(callback_query.id)
-    
+
     await Forma.s1.set()
+
 
     await bot.send_message(
         callback_query.from_user.id,
         text="""*Қанша номерок алғыңыз келеді?
 Цифрмен жазыңыз👇🏻
+
+1000 тг 5 номер
+2000 тг 10 номер
+3000 тг 15 номер
+4000 тг 20 номер
+5000 тг 25 номер
+6000 тг 30 номер
+7000 тг 35 номер
+8000 тг 40 номер
+9000 тг 45 номер
+10000 тг 50 номер
+20000 тг 100 номер
+40000 тг 200 номер
+100000 тг 500 номер
+
 Номерок көп болған сайын курсқа
 доступ көбейеді, және көлік иесі болу мүмкіндігі жоғары🔥*""",
         parse_mode="Markdown",
         reply_markup=btn.digits_and_cancel()
     ) 
   
+
+@dp.message_handler(content_types=types.ContentType.DOCUMENT)
+async def get_file_id(message: types.Message):
+    if message.document.mime_type == 'application/pdf':
+        file_id = message.document.file_id
+        await message.reply(f"File ID: {file_id}")
+
 
 @dp.message_handler(commands=['get_last_message'])
 async def get_last_message_handler(message: types.Message):
@@ -71,6 +96,7 @@ async def get_last_message_handler(message: types.Message):
 
     except Exception as e:
         await message.answer(f"An error occurred: {e}")
+
 
 @dp.message_handler(commands=['admin'])
 async def handler(message: types.Message):
@@ -184,7 +210,7 @@ async def start_handler(message: types.Message):
 
     
              
-@dp.message_handler(content_types=[types.ContentType.PHOTO, types.ContentType.VIDEO])
+@dp.message_handler(content_types=[types.ContentType.PHOTO, types.ContentType.VIDEO, types.ContentType.DOCUMENT])
 async def media_handler(message: types.Message, state: FSMContext):
     file_id = None
 
@@ -195,6 +221,18 @@ async def media_handler(message: types.Message, state: FSMContext):
     elif message.content_type == 'video':
         # Получаем file_id видео
         file_id = message.video.file_id
+    elif message.content_type == 'document':
+        # Проверяем, является ли документ PDF файлом
+        if message.document.mime_type == 'application/pdf':
+            # Получаем file_id для PDF файла
+            file_id = message.document.file_id
+        else:
+            # Если документ не PDF, отправляем сообщение об ошибке
+            await bot.send_message(
+                message.from_user.id,
+                text="Ошибка: загрузите PDF файл.",
+            )
+            return
 
     if file_id:
         # Сохраняем file_id в состоянии
@@ -212,6 +250,7 @@ async def media_handler(message: types.Message, state: FSMContext):
             message.from_user.id,
             text="Ошибка: неизвестный тип медиафайла.",
         )  
+ 
 
 @dp.message_handler(Text(equals="🎥 Бейне курстар"), content_types=['text'])
 async def handler(message: types.Message):
@@ -233,24 +272,48 @@ async def handler(message: types.Message):
 
     await bot.send_message(
         message.from_user.id,
-        text="""*https://wa.me/87471850499*""",
+        text="""*https://wa.me/+77769001919*""",
         parse_mode="Markdown",
     ) 
 
 
-@dp.message_handler(Text(equals="🎞 Кино беру"), content_types=['text'])
+@dp.message_handler(Text(equals="📹 Курс беру"), content_types=['text'])
 async def handler(message: types.Message):
     
     if message.from_user.id == admin or message.from_user.id == admin2 or message.from_user.id == admin3:
-        #file_id = "BAACAgIAAxkBAAHqn9lmzCTjZas-7lUDgSY-FAABVIBF21cAAjpVAAIxrGFKi6XARXI2nR41BA"
-        #file_id = "BAACAgIAAxkBAAIBfmZVvFgHXNy6dEjDe2rDHuGlC3jrAALaTQAC1jOpSiMaJlO20CwKNQQ"
-        first_cinema = "AgACAgIAAxkBAAID4GcjW6EeTHiQ7VJy2DcwPVpuJmabAALR4jEbeqEYSZhgzh3T2zCkAQADAgADeQADNgQ"
-        second_cinema = "BAACAgIAAxkBAAMJZyYe7_WEAS_hyBFZjzgQDO7qnAkAAlBbAAKOvjFJsU2nPCIK1Wg2BA"   
+       # Первая группа медиафайлов
+        media_group_1 = [
+            InputMediaPhoto(media="AgACAgIAAxkBAAMeZyqoL2hcPlVl9zI4CuqW5m3R12sAAorwMRu60lFJ5hIbmqGY8gYBAAMCAAN5AAM2BA", protect_content=True),
+            InputMediaVideo(media="BAACAgIAAxkBAAMOZyqe_nfopY8Q5-1w_WeTC7154m8AAjlnAAK60lFJ6L_NUPBTXrQ2BA", caption="*Дубайский чизкейк*", parse_mode="Markdown", protect_content=True),
+            InputMediaPhoto(media="AgACAgIAAxkBAAMmZyqo72O6rOIDWCHVynSI-4-Ib8kAAo7wMRu60lFJNxy3QvbEieABAAMCAAN5AAM2BA", protect_content=True),
+            InputMediaVideo(media="BAACAgIAAxkBAAMQZyqfeZNNl5pHS26pJUFDMqCBz-EAAjpnAAK60lFJkWKyJ47LKKc2BA", caption="*Баноффипай Тарталетки*", parse_mode="Markdown", protect_content=True),
+            InputMediaPhoto(media="AgACAgIAAxkBAAMgZyqoVJ_aJdlmTsTeZNd_zSXrJnIAAovwMRu60lFJYJxv0s3qK2oBAAMCAAN5AAM2BA", protect_content=True),
+            InputMediaVideo(media="BAACAgIAAxkBAAMSZyqfo_h18m4nswMZ1s39vYVw9zYAAjtnAAK60lFJvOXjvcm9ESM2BA", caption="*Дубайский шоколад*", parse_mode="Markdown", protect_content=True)
+        ]
 
-        #user_ids = db.gatherC() 
-        user_ids = [800703982, 6391833468]
-        file_type = 'video'
-        caption = """Құрметті 🎞  кино сүйер қауым\n\nСанаулы күннен соң сіздерге сатып алған кино билеттеріңіздің арасынан Mercedes авто 🚙 көлік сыйға берілетін болады және 15 адамның қарызын жауып беретін боламыз\nКино билеттеріңізді көру үшін төмендегі \n🧧 Ұтыс билеттерім - түймесін баса отыра көре аласыздар!\n\nСыйлықты ұтып алу мүмкіндігін арттыру үшін \n🎬 Қайтадан киноны - сатып алу түймесін баса отыра тағыда кино билетін ала аласыздар! Оған дәлел ретінде бірінші көлікті ұтып алған Ахметов Ғалым дәлел 10 билет алған\n\nКино билеттер барлығы РАНДОМНО ТҮРДЕ ОЙНАТЫЛАДЫ ЯҒНИ СИСТЕМА ӨЗІ ТАҢДАЙДЫ ❗️"""
+        # Вторая группа медиафайлов
+        media_group_2 = [
+            InputMediaPhoto(media="AgACAgIAAxkBAAMkZyqo0Z5XS8VdmQ5bGm1NkCq7U6oAAo3wMRu60lFJ22Wq-hMCB7ABAAMCAAN5AAM2BA", protect_content=True),
+            InputMediaVideo(media="BAACAgIAAxkBAAMUZyqgEINrfKiWiimkNEzKijzyDZIAAj1nAAK60lFJbBRFB-tfEUQ2BA", caption="*Тарымен чизкейк*", parse_mode="Markdown", protect_content=True),
+            InputMediaPhoto(media="AgACAgIAAxkBAAMaZyqndQUGGZtSINCdZxmGwXTSdBYAAofwMRu60lFJfbNFd-RW6JcBAAMCAAN5AAM2BA", protect_content=True),
+            InputMediaVideo(media="BAACAgIAAxkBAAMWZyqgkGfWka-1f_eWUNiyI8f81rwAAj5nAAK60lFJVlhlilAwuYo2BA", caption="*Нутелла торт*", parse_mode="Markdown", protect_content=True),
+            InputMediaPhoto(media="AgACAgIAAxkBAAMiZyqon452oco0ASVyHGqI1SRQXlkAAozwMRu60lFJv8e6Y5TV2dABAAMCAAN5AAM2BA", protect_content=True),
+            InputMediaVideo(media="BAACAgIAAxkBAAMYZyqg2oywORWXAAEISx_bnPWMnHdqAAI_ZwACutJRSSPOQsKLE7CaNgQ", caption="*Milka торт*", parse_mode="Markdown", protect_content=True)
+        ]
+
+        # Отправляем первую группу медиафайлов
+        await bot.send_media_group(
+            chat_id=message.from_user.id,
+            media=media_group_1,
+            protect_content=True
+        )
+
+        # Отправляем вторую группу медиафайлов
+        await bot.send_media_group(
+            chat_id=message.from_user.id,
+            media=media_group_2,
+            protect_content=True
+        )
 
         successful, failed = await ForwardMessage(file_id, user_ids, file_type, caption)
         await bot.send_message(admin, text=f"Сәтті жіберілді: {successful} қолданушыға\nҚателік болды: {failed} қолданушыға", reply_markup=btn.menu())
@@ -286,7 +349,7 @@ async def handler(message: types.Message):
 
     await bot.send_message(
         message.from_user.id,
-        text="""*@senior_coffee_drinker*\n""",
+        text="""*@senior_coffee_drinker +77769001919*\n""",
         parse_mode="Markdown",
     ) 
 
@@ -376,6 +439,7 @@ async def handler(message: types.Message):
         reply_markup=btn.admin()
     ) 
 
+@dp.message_handler(commands=['mytickets'])
 @dp.message_handler(Text(equals="🧧 Ұтыс билеттерім"), content_types=['text'])
 async def handler(message: types.Message):
 
@@ -400,7 +464,7 @@ async def handler(message: types.Message):
 @dp.message_handler(Text(equals="📹 Курс сабақтары"), content_types=['text'])
 async def handler(message: types.Message):
 
-    if message.from_user.id == admin:
+    if message.from_user.id == admin or admin2:
         # Первая группа медиафайлов
         media_group_1 = [
             InputMediaPhoto(media="AgACAgIAAxkBAAMeZyqoL2hcPlVl9zI4CuqW5m3R12sAAorwMRu60lFJ5hIbmqGY8gYBAAMCAAN5AAM2BA", protect_content=True),
