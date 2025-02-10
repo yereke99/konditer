@@ -35,6 +35,10 @@ class PDFReaders:
                 return 'russian'
             elif "Төлем шоты" in first_page_text or "Фискалдық түбіртек" in first_page_text:
                 return 'kazakh'
+            elif "Сатып алғаным" in first_page_text:
+                return 'kazakh'
+            elif "Покупки" in first_page_text:
+                return 'russian'
         return 'unknown'
     
     def extract_detailed_info(self):

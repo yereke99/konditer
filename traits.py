@@ -37,9 +37,12 @@ class PDFReader:
 
     def determine_language(self):
         if self.reader:
-            first_page_text = self.extract_text_from_page(0)
-            if "Счет на оплату" in first_page_text:
+            if "Покупки" in first_page_text:
                 return 'russian'
+            elif "Счет на оплату" in first_page_text:
+                return 'russian'
+            elif "Сатып алғаным" in first_page_text:
+                return 'kazakh'
             elif "Төлем шоты" in first_page_text:
                 return 'kazakh'
         return 'unknown'

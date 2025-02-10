@@ -53,11 +53,31 @@ class Button:
        ])
     
     def digits_and_cancel(self):
-        buttons = ["5", "10", "25", "50", "100", "500"]  # Преобразуем числа в строки
-        buttons.append("🔕 Бас тарту")
+        # Используем ключи словаря prices для генерации кнопок
+        prices = {
+            1: 200,
+            2: 400,
+            3: 600,
+            4: 800,
+            5: 1000,
+            10: 2000,
+            25: 5000,
+            50: 10000,
+            100: 20000,
+            250: 50000,
+            500: 100000
+        }
+        buttons = [str(key) for key in prices.keys()]  # Преобразуем ключи в строки
+        buttons.append("🔕 Бас тарту")  # Добавляем кнопку отмены
         return self._create_keyboard(buttons)
 
-    
+    def tg_link(self):
+        keyboard = types.InlineKeyboardMarkup()
+        keyboard.add(types.InlineKeyboardButton("📗 💳 Курс сатып алу", url="https://t.me/konditerbol_bot"))
+        
+        return keyboard
+
+
     def menu_not_paid(self):
 
         return self._create_keyboard([

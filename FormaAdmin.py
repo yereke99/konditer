@@ -73,7 +73,7 @@ async def send_message(chat_id, file_id, file_type, caption):
         # If the caption is empty or incorrectly formatted, send without parse_mode
         try:
             if file_type == 'photo':
-                await bot.send_photo(chat_id, file_id, protect_content=True, caption=caption, reply_markup=btn.buy_cinema())
+                await bot.send_photo(chat_id, file_id,  caption=caption, protect_content=True, reply_markup=btn.buy_cinema())
             elif file_type == 'video':
                 await bot.send_video(chat_id, file_id, protect_content=True, caption=caption, parse_mode="Markdown", reply_markup=btn.buy_cinema())
             elif file_type == 'document':

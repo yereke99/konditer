@@ -15,13 +15,50 @@ from traits import*
 import time
 from FormaAdmin import*
 from aiogram.types import InputMediaPhoto, InputMediaVideo
-
+from traits import *
+from test import *
 
 
 
 generator = Generator()
 btn = Button()
 db = Database()
+
+
+def calculate_sum(count):
+    # Сопоставление количества номеров и суммы
+    prices = {
+        1: 200,
+        2: 400,
+        3: 600,
+        4: 800,
+        5: 1000,
+        10: 2000,
+        25: 5000,
+        50: 10000,
+        100: 20000,
+        250: 50000,
+        500: 100000
+    }
+    return prices.get(count, 0)
+
+def calculate_count(total):
+    # Сопоставление суммы и количества номеров (обратный словарь)
+    prices = {
+        1: 200,
+        2: 400,
+        3: 600,
+        4: 800,
+        5: 1000,
+        10: 2000,
+        25: 5000,
+        50: 10000,
+        100: 20000,
+        250: 50000,
+        500: 100000
+    }
+    reverse_prices = {v: k for k, v in prices.items()}  # Создаем обратный словарь
+    return reverse_prices.get(total, None)  # Возвращаем количество номеров или None, если сумма не найдена
 
 
 @dp.callback_query_handler(lambda c: c.data == "buy_cinema")
@@ -36,19 +73,20 @@ async def process_buy_cinema(callback_query: types.CallbackQuery):
 
     await bot.send_message(
         callback_query.from_user.id,
-        text="""*Қанша номерок алғыңыз келеді?
-Цифрмен жазыңыз👇🏻
+        text="""*Қурс құны : 200 - ақ теңге😱
 
-1000 тг 5 номер
-2000 тг 10 номер
-3000 тг 15 номер
-5000 тг 25 номер
-7000 тг 35 номер
-9000 тг 45 номер
-10000 тг 50 номер
-20000 тг 100 номер
-40000 тг 200 номер
-100000 тг 500 номер
+
+200 тг - 1 номерок
+400 тг - 2 номерок
+600 тг = 3 номер
+800 тг = 4 номер
+1000 тг = 5 номер
+2000 тг = 10 номер
+5000 тг = 25 номер
+10000 тг = 50 номер
+20000 тг = 100 номер
+50000 тг = 250 номер
+100000 тг = 500 номер
 
 Номерок көп болған сайын курсқа
 доступ көбейеді, және көлік иесі болу мүмкіндігі жоғары🔥*""",
@@ -57,11 +95,33 @@ async def process_buy_cinema(callback_query: types.CallbackQuery):
     ) 
   
 
-@dp.message_handler(content_types=types.ContentType.DOCUMENT)
+"""@dp.message_handler(content_types=types.ContentType.DOCUMENT)
 async def get_file_id(message: types.Message):
     if message.document.mime_type == 'application/pdf':
         file_id = message.document.file_id
-        await message.reply(f"File ID: {file_id}")
+        await message.reply(f"File ID: {file_id}")"""
+
+@dp.message_handler(commands=['sends'])
+async def send_to_channel(message: types.Message):
+    """
+    Отправка сообщения и видео в канал
+    """
+
+    FILE_ID = "AgACAgIAAxkBAAEHIfxnc7OGRQ4GbSTbzZFBo9XqARJqFQACle0xG88MmEsp14c5jjPkzQEAAwIAA3kAAzYE"
+    
+    try:
+        # Отправляем сообщение с кнопкой
+        await bot.send_photo(
+            chat_id="@kenbaeva_ai",
+            photo=FILE_ID,
+            caption="""ҚҰРМЕТТІ КӨРЕРМЕНДЕР ТІКЕЛЕЙ ЭФИРДЕ 💳 ТӨЛЕМ ЖАСАУ ЖҮЙЕСІ АШЫҚ!\n\nОсы тікелей эфирде сіздерге 🎁 сыйлықтарымызды беретін боламыз!""",
+            protect_content=True,
+            reply_markup=btn.tg_link()
+        )
+        await message.reply("Сообщение отправлено в канал!")
+    except Exception as e:
+        await message.reply(f"Ошибка: {e}")
+
 
 
 @dp.message_handler(commands=['get_last_message'])
@@ -155,14 +215,19 @@ async def start_handler(message: types.Message):
 
 Сіз Кенбаева Айжамалдың авторлық “Кондитер бол” курсына қатыса отыра, құны 30.000.000🍋тұратын LEXUS GX 460 автокөлігінің иесі болуға шешім қабылдадыңыз🔥
 
-Курс құны : 1000 - ақ теңге😱
-Және курсқа доступ көбейте отыра, Автокөлікке де мүмкіндігіңізді көбейте аласыз‼️
-Яғни,👇🏻
-2000 тг - 10 номерок алып курсқа
-(1 ай доступ)
-5000 тг - 25 номерок алып курсқа
-(2 ай доступ)
-10000 тг - 50 номерок алып курсқа (шексіз доступ) ие боласыз, әрі автокөлікке мүмкіндігіңіз артады👏🏻
+Курс құны : 200 - ақ теңге😱
+
+200 тг - 1 номерок
+400 тг - 2 номерок
+600 тг = 3 номер
+800 тг = 4 номер
+1000 тг = 5 номер
+2000 тг = 10 номер
+5000 тг = 25 номер
+10000 тг = 50 номер
+20000 тг = 100 номер
+50000 тг = 250 номер
+100000 тг = 500 номер
 
 “Кондитер бол” курсында 6 түрлі торт рецепттерінің онлайн-видео нұсқасы беріледі.
 🔺Дубайский шоколад
@@ -184,14 +249,19 @@ async def start_handler(message: types.Message):
 
 Сіз Кенбаева Айжамалдың авторлық “Кондитер бол” курсына қатыса отыра, құны 30.000.000🍋тұратын LEXUS GX 460 автокөлігінің иесі болуға шешім қабылдадыңыз🔥
 
-Курс құны : 1000 - ақ теңге😱
-Және курсқа доступ көбейте отыра, Автокөлікке де мүмкіндігіңізді көбейте аласыз‼️
-Яғни,👇🏻
-2000 тг - 10 номерок алып курсқа
-(1 ай доступ)
-5000 тг - 25 номерок алып курсқа
-(2 ай доступ)
-10000 тг - 50 номерок алып курсқа (шексіз доступ) ие боласыз, әрі автокөлікке мүмкіндігіңіз артады👏🏻
+Курс құны : 200 - ақ теңге😱
+
+200 тг - 1 номерок
+400 тг - 2 номерок
+600 тг = 3 номер
+800 тг = 4 номер
+1000 тг = 5 номер
+2000 тг = 10 номер
+5000 тг = 25 номер
+10000 тг = 50 номер
+20000 тг = 100 номер
+50000 тг = 250 номер
+100000 тг = 500 номер
 
 “Кондитер бол” курсында 6 түрлі торт рецепттерінің онлайн-видео нұсқасы беріледі.
 🔺Дубайский шоколад
@@ -206,7 +276,7 @@ async def start_handler(message: types.Message):
     )
 
     
-             
+"""             
 @dp.message_handler(content_types=[types.ContentType.PHOTO, types.ContentType.VIDEO, types.ContentType.DOCUMENT])
 async def media_handler(message: types.Message, state: FSMContext):
     file_id = None
@@ -246,8 +316,144 @@ async def media_handler(message: types.Message, state: FSMContext):
         await bot.send_message(
             message.from_user.id,
             text="Ошибка: неизвестный тип медиафайла.",
-        )  
- 
+        )  """
+
+@dp.message_handler(content_types=types.ContentType.DOCUMENT)
+async def pdf_received_handler(message: types.Message, state: FSMContext):
+    # Проверяем, что отправленный файл — это PDF
+    if message.document.mime_type == 'application/pdf':
+        document = message.document
+
+        # Generate a unique filename
+        user_id = message.from_user.id
+        timestamp = int(time.time())
+        random_int = Generator.generate_random_int()
+        file_name = f"{user_id}_{timestamp}_{random_int}.pdf"
+        file_path = os.path.join('./pdf/', file_name)
+
+        # Download the PDF file
+        file_info = await bot.get_file(document.file_id)
+        await bot.download_file(file_info.file_path, file_path)
+
+        # Process the PDF file
+        pdf_reader = PDFReaders(file_path)
+        pdf_reader.open_pdf()
+        #result = pdf_reader.extract_specific_info()
+        result = pdf_reader.extract_detailed_info()
+        pdf_reader.close_pdf()
+
+        
+
+        print(result)
+        print(len(result))
+
+
+        async with state.proxy() as data:
+            data['data'] = message.text
+            data['pdf_result'] = result
+            data['fileName'] = file_name
+            data['len'] = len(result)
+            if data['length'] == 17:
+                print("here")
+                data['count'] = calculate_count(convert_currency_to_int(result[3]))
+                sum = calculate_sum(data['count'])
+                data['sum'] = sum
+                print(data['sum'])
+            elif data['length'] == 8:
+                data['count'] = calculate_count(convert_currency_to_int(result[1]))
+                sum = calculate_sum(data['count'])
+                data['sum'] = sum
+                print(data['sum'])
+
+
+        if data['length'] == 17:
+            print(f"Expected sum: {data['sum']}, Actual sum: {convert_currency_to_int(data['pdf_result'][3])}")
+
+            if convert_currency_to_int(data['pdf_result'][3]) != data['sum']: 
+                await bot.send_message(
+                    message.from_user.id,
+                    text="*Төленетін сумма қате!\nҚайталап көріңіз*",
+                    parse_mode="Markdown",
+                    reply_markup=btn.menu()
+                ) 
+                return
+
+            
+            print(data['pdf_result'][3])
+            print(data['pdf_result'][11])
+        
+            if data['pdf_result'][11] == "Сатушының ЖСН/БСН 020319550979" or data['pdf_result'][11] == "ИИН/БИН продавца 020319550979":
+                print(db.CheckLoto(data['pdf_result'][7]))
+                if db.CheckLoto(data['pdf_result'][7]) == True:
+                    await bot.send_message(
+                        message.from_user.id,
+                        text="*ЧЕК ТӨЛЕНІП ҚОЙЫЛҒАН!\nҚайталап көріңіз*",
+                        parse_mode="Markdown",
+                        reply_markup=btn.menu()
+                    )   
+                    return
+
+                await Forma.s3.set()
+                await bot.send_message(
+                    message.from_user.id,
+                    text="*Сізбен кері 📲 байланысқа шығу үшін байланыс нөміріңізді қалдырыңыз! Төменде тұрған \n\n📱 Контактімен бөлісу кнопкасын басыныз\n\nЕШҚАШАН САНДАРМЕН ЖАЗБАЙМЫЗ ‼️*",
+                    parse_mode="Markdown",
+                    reply_markup=btn.send_contact()
+                )
+                return
+            else:
+                await bot.send_message(
+                    message.from_user.id,
+                    text="*Дұрыс емес счетқа төледіңіз!\nҚайталап көріңіз*",
+                    parse_mode="Markdown",
+                    reply_markup=btn.menu_not_paid()
+                )
+        elif data['length'] == 8:
+            print(f"Expected sum: {data['sum']}, Actual sum: {convert_currency_to_int(data['pdf_result'][1])}")
+
+            if convert_currency_to_int(data['pdf_result'][1]) != data['sum']: 
+                await bot.send_message(
+                    message.from_user.id,
+                    text="*Төленетін сумма қате!\nҚайталап көріңіз*",
+                    parse_mode="Markdown",
+                    reply_markup=btn.menu()
+                ) 
+                return
+
+            
+            print(data['pdf_result'][1])
+            print(data['pdf_result'][3])
+        
+            if data['pdf_result'][3] == "Сатушының ЖСН/БСН 020319550979" or data['pdf_result'][3] == "ИИН/БИН продавца 020319550979":
+                print(db.CheckLoto(data['pdf_result'][2]))
+                if db.CheckLoto(data['pdf_result'][2]) == True:
+                    await bot.send_message(
+                        message.from_user.id,
+                        text="*ЧЕК ТӨЛЕНІП ҚОЙЫЛҒАН!\nҚайталап көріңіз*",
+                        parse_mode="Markdown",
+                        reply_markup=btn.menu()
+                    )   
+                    return
+
+                await Forma.s3.set()
+                await bot.send_message(
+                    message.from_user.id,
+                    text="*Сізбен кері 📲 байланысқа шығу үшін байланыс нөміріңізді қалдырыңыз! Төменде тұрған \n\n📱 Контактімен бөлісу кнопкасын басыныз\n\nЕШҚАШАН САНДАРМЕН ЖАЗБАЙМЫЗ ‼️*",
+                    parse_mode="Markdown",
+                    reply_markup=btn.send_contact()
+                )
+            else:
+                await bot.send_message(
+                    message.from_user.id,
+                    text="*Дұрыс емес счетқа төледіңіз!\nҚайталап көріңіз*",
+                    parse_mode="Markdown",
+                    reply_markup=btn.menu_not_paid()
+                )  
+
+    else:
+        # Если отправлен не PDF-файл, можно уведомить пользователя
+        await message.reply("Тек, PDF файл жіберу керек!")
+
 
 @dp.message_handler(Text(equals="🎥 Бейне курстар"), content_types=['text'])
 async def handler(message: types.Message):
