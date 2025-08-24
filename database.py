@@ -5,7 +5,7 @@ from datetime import datetime
 
 class Database():
     def __init__(self) -> None:
-        self.db = connect('cinema.db')
+        self.db = connect('konditer.db')
         self.cursor = self.db.cursor()
 
         self.tableMoney = """CREATE TABLE money(
@@ -148,13 +148,26 @@ class Database():
             return []
 
 
-    def InsertClient(self, id, userName,  contact, dataR, dataP, check) -> bool:
+    def InsertClient(self, id, userName, contact, dataR, dataP, check) -> bool:
         try:
-            self.cursor.execute(self.insertClient, (id, userName,  contact, dataR, dataP, check, ))
+            # First, check if user already exists
+            checkUserExists = """SELECT COUNT(*) FROM client WHERE id_user = ?"""
+            self.cursor.execute(checkUserExists, (id,))
+            user_count = self.cursor.fetchone()[0]
+            
+            if user_count > 0:
+                # User already exists, skip insertion
+                print(f"User with id {id} already exists. Skipping insertion.")
+                return True  # Return True since this is not an error condition
+            
+            # User doesn't exist, proceed with insertion
+            self.cursor.execute(self.insertClient, (id, userName, contact, dataR, dataP, check))
             self.db.commit()
+            print(f"User with id {id} successfully inserted.")
             return True
+            
         except Exception as e:
-            print(e)
+            print(f"Error in InsertClient: {e}")
             return False
         
     def InsertPaid(self, id, movId, dataPaid) -> bool:
@@ -496,6 +509,10 @@ class Database():
 
     def delete(self):
         self.cursor.execute("Delete from loto where id_loto=?", (1, ))
+        self.db.commit()
+    
+    def dropc(self):
+        self.cursor.execute("DROP TABLE")
         self.db.commit()
     
    
