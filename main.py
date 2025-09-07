@@ -103,6 +103,12 @@ async def get_file_id(message: types.Message):
     file_id = message.photo[-1].file_id
     await message.reply(f"File ID: {file_id}")
 
+@dp.message_handler(content_types=types.ContentType.VIDEO)
+async def get_video_file_id(message: types.Message):
+    
+    file_id = message.video.file_id
+    await message.reply(f"File ID: {file_id}")
+
 @dp.message_handler(commands=['sends'])
 async def send_to_channel(message: types.Message):
     """
@@ -201,7 +207,7 @@ async def start_handler(message: types.Message):
     print(message.from_user.id)
       
     from datetime import datetime
-    fileId = "AgACAgIAAxkBAAEgryloqvCFEGROaAPKSXi-aP55uQQjuAAC3PgxG8tNWUlwZJWSDtYQpQEAAwIAA3kAAzYE"
+    fileId = "BAACAgIAAxkBAAEgsFNoq046ayvXFIn-aAd_wcGUKE0SBgACRYYAAstNWUme-qYmGIRnwjYE"
 
     user_id = message.from_user.id
     user_name = f"@{message.from_user.username}"
@@ -210,7 +216,7 @@ async def start_handler(message: types.Message):
     db.JustInsert(user_id, user_name, time_now)  
     
     if db.CheckUserPaid(message.from_user.id) == True:
-        await bot.send_photo(
+        await bot.send_video(
             message.from_user.id,
             fileId,
             caption="""*Сәлематсызба, ХАЙЫРЛЫ БІЛІМ БОЛСЫН,алтын иесі!❤️
@@ -238,7 +244,7 @@ async def start_handler(message: types.Message):
         )
         return
 
-    await bot.send_photo(
+    await bot.send_video(
         message.from_user.id,
         fileId,
         caption="""*Сәлематсызба, ХАЙЫРЛЫ БІЛІМ БОЛСЫН,алтын иесі!❤️
@@ -343,7 +349,7 @@ async def pdf_received_handler(message: types.Message, state: FSMContext):
             data['pdf_result'] = result
             data['fileName'] = file_name
             data['len'] = len(result)
-            if data['length'] == 17:
+            if data['length'] == 16:
                 print("here")
                 data['count'] = calculate_count(convert_currency_to_int(result[3]))
                 sum = calculate_sum(data['count'])
@@ -356,7 +362,7 @@ async def pdf_received_handler(message: types.Message, state: FSMContext):
                 print(data['sum'])
 
 
-        if data['length'] == 17:
+        if data['length'] == 16:
             print(f"Expected sum: {data['sum']}, Actual sum: {convert_currency_to_int(data['pdf_result'][3])}")
 
             if convert_currency_to_int(data['pdf_result'][3]) != data['sum']: 
@@ -370,11 +376,11 @@ async def pdf_received_handler(message: types.Message, state: FSMContext):
 
             
             print(data['pdf_result'][3])
-            print(data['pdf_result'][11])
+            print(data['pdf_result'][10])
         
-            if data['pdf_result'][11] == "Сатушының ЖСН/БСН 020319550979" or data['pdf_result'][11] == "ИИН/БИН продавца 020319550979":
-                print(db.CheckLoto(data['pdf_result'][7]))
-                if db.CheckLoto(data['pdf_result'][7]) == True:
+            if data['pdf_result'][11] == "Сатушының ЖСН/БСН 020319550979" or data['pdf_result'][10] == "ИИН/БИН продавца 020319550979":
+                print(db.CheckLoto(data['pdf_result'][6]))
+                if db.CheckLoto(data['pdf_result'][6]) == True:
                     await bot.send_message(
                         message.from_user.id,
                         text="*ЧЕК ТӨЛЕНІП ҚОЙЫЛҒАН!\nҚайталап көріңіз*",

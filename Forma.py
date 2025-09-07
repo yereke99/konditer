@@ -42,7 +42,10 @@ def calculate_sum(count):
         1: 50,
         10: 500,
         20: 1000,
+        30: 1500,
+        40: 2000,
         50: 2500,
+        80: 4000,
         100: 5000,
         200: 10000,
         500: 25000
@@ -99,14 +102,6 @@ async def handler(message: types.Message, state: FSMContext):
     """
     try:
         await Forma.next()
-
-        with open("/home/konditer/doc/offerta.pdf", 'rb') as doc:
-            await bot.send_document(
-            message.from_user.id,
-            doc,
-            caption="*📄 Оффертамен танысып алыңыз*",
-            parse_mode="Markdown",
-        )
 
         async with state.proxy() as data:
             data['count'] = int(message.text)
