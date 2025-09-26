@@ -766,7 +766,7 @@ async def handler(message: types.Message):
             current_entries = random.sample(current_entries, step)
             if step == 1:
                 row = current_entries[0]
-                text = f"🎁 50 000 теңге\n\nID Loto: {row[0]}\nContact: {row[1]}\nData Pay: {row[2]}"
+                text = f"🎁 2000 теңге\n\nID Loto: {row[0]}\nContact: {row[1]}\nData Pay: {row[2]}"
             else:
                 text = "\n\n".join([f"ID Loto: {row[0]}\nContact: {row[1]}\nData Pay: {row[2]}" for row in current_entries])
             
@@ -820,7 +820,7 @@ async def handler(message: types.Message):
             current_entries = random.sample(current_entries, step)
             if step == 1:
                 row = current_entries[0]
-                text = f"🎁 50 000 теңге\n\nID Loto: {row[0]}\nContact: {row[1]}\nData Pay: {row[2]}"
+                text = f"🎁 2000 теңге\n\nID Loto: {row[0]}\nContact: {row[1]}\nData Pay: {row[2]}"
             else:
                 text = "\n\n".join([f"ID Loto: {row[0]}\nContact: {row[1]}\nData Pay: {row[2]}" for row in current_entries])
             
@@ -873,7 +873,7 @@ async def handler(message: types.Message):
             current_entries = random.sample(current_entries, step)
             if step == 1:
                 row = current_entries[0]
-                text = f"🎁 50 000 теңге\n\nID Loto: {row[0]}\nContact: {row[1]}\nData Pay: {row[2]}"
+                text = f"🎁 2000 теңге\n\nID Loto: {row[0]}\nContact: {row[1]}\nData Pay: {row[2]}"
             else:
                 text = "\n\n".join([f"ID Loto: {row[0]}\nContact: {row[1]}\nData Pay: {row[2]}" for row in current_entries])
             
@@ -925,7 +925,7 @@ async def handler(message: types.Message):
             current_entries = random.sample(current_entries, step)
             if step == 1:
                 row = current_entries[0]
-                text = f"🎁 50 000 теңге\n\nID Loto: {row[0]}\nContact: {row[1]}\nData Pay: {row[2]}"
+                text = f"🎁 2000 теңге\n\nID Loto: {row[0]}\nContact: {row[1]}\nData Pay: {row[2]}"
             else:
                 text = "\n\n".join([f"ID Loto: {row[0]}\nContact: {row[1]}\nData Pay: {row[2]}" for row in current_entries])
             
@@ -980,7 +980,7 @@ async def handler(message: types.Message):
             current_entries = random.sample(current_entries, step)
             if step == 1:
                 row = current_entries[0]
-                text = f"🎁 100 000 теңге\n\nID Loto: {row[0]}\nContact: {row[1]}\nData Pay: {row[2]}"
+                text = f"🎁 2000 теңге\n\nID Loto: {row[0]}\nContact: {row[1]}\nData Pay: {row[2]}"
                 await send_pdf_with_caption(message.from_user.id, row[0], text)
             else:
                 text = "\n\n".join([f"ID Loto: {row[0]}\nContact: {row[1]}\nData Pay: {row[2]}" for row in current_entries])
@@ -1029,7 +1029,7 @@ async def handler(message: types.Message):
             current_entries = random.sample(current_entries, step)
             if step == 1:
                 row = current_entries[0]
-                text = f"🎁 100 000 теңге\n\nID Loto: {row[0]}\nContact: {row[1]}\nData Pay: {row[2]}"
+                text = f"🎁 2000 теңге\n\nID Loto: {row[0]}\nContact: {row[1]}\nData Pay: {row[2]}"
                 await send_pdf_with_caption(message.from_user.id, row[0], text)
             else:
                 text = "\n\n".join([f"ID Loto: {row[0]}\nContact: {row[1]}\nData Pay: {row[2]}" for row in current_entries])
@@ -1078,7 +1078,7 @@ async def handler(message: types.Message):
             current_entries = random.sample(current_entries, step)
             if step == 1:
                 row = current_entries[0]
-                text = f"🎁 100 000 теңге\n\nID Loto: {row[0]}\nContact: {row[1]}\nData Pay: {row[2]}"
+                text = f"🎁 2000 теңге\n\nID Loto: {row[0]}\nContact: {row[1]}\nData Pay: {row[2]}"
                 await send_pdf_with_caption(message.from_user.id, row[0], text)
             else:
                 text = "\n\n".join([f"ID Loto: {row[0]}\nContact: {row[1]}\nData Pay: {row[2]}" for row in current_entries])
@@ -1129,7 +1129,7 @@ async def handler(message: types.Message):
             current_entries = random.sample(current_entries, step)
             if step == 1:
                 row = current_entries[0]
-                text = f"🎁 100 000 теңге\n\nID Loto: {row[0]}\nContact: {row[1]}\nData Pay: {row[2]}"
+                text = f"🎁 2000 теңге\n\nID Loto: {row[0]}\nContact: {row[1]}\nData Pay: {row[2]}"
                 await send_pdf_with_caption(message.from_user.id, row[0], text)
             else:
                 text = "\n\n".join([f"ID Loto: {row[0]}\nContact: {row[1]}\nData Pay: {row[2]}" for row in current_entries])
@@ -1179,7 +1179,7 @@ async def handler(message: types.Message):
             current_entries = random.sample(current_entries, step)
             if step == 1:
                 row = current_entries[0]
-                text = f"🎁 100 000 теңге\n\nID Loto: {row[0]}\nContact: {row[1]}\nData Pay: {row[2]}"
+                text = f"🎁 2000 теңге\n\nID Loto: {row[0]}\nContact: {row[1]}\nData Pay: {row[2]}"
                 await send_pdf_with_caption(message.from_user.id, row[0], text)
             else:
                 text = "\n\n".join([f"ID Loto: {row[0]}\nContact: {row[1]}\nData Pay: {row[2]}" for row in current_entries])
@@ -1228,7 +1228,7 @@ async def handler(message: types.Message):
             current_entries = random.sample(current_entries, step)
             if step == 1:
                 row = current_entries[0]
-                text = f"🎁 100 000 теңге\n\nID Loto: {row[0]}\nContact: {row[1]}\nData Pay: {row[2]}"
+                text = f"🎁 2000 теңге\n\nID Loto: {row[0]}\nContact: {row[1]}\nData Pay: {row[2]}"
                 await send_pdf_with_caption(message.from_user.id, row[0], text)
             else:
                 text = "\n\n".join([f"ID Loto: {row[0]}\nContact: {row[1]}\nData Pay: {row[2]}" for row in current_entries])
@@ -1325,6 +1325,152 @@ async def handler(message: types.Message):
             await asyncio.sleep(0.5)
 
 
+#
+@dp.message_handler(Text(equals="🎁 11-ші сыйлық"), content_types=['text'])
+async def handler(message: types.Message):
+    if message.from_user.id in [admin, admin2, admin3]:
+        steps = [50, 25, 10, 1]
+        
+        # Fetch 100 entries initially
+        entries = db.fetch_random_loto_car(100)
+        if not entries:
+            await bot.send_message(
+                message.from_user.id,
+                text="No data available.",
+                reply_markup=btn.gift()
+            )
+            return
+        
+        # Send the first 100 entries as one message
+        first_batch = entries[:100]
+        text = "\n\n".join([f"ID Loto: {row[0]}\nContact: {row[1]}\nData Pay: {row[2]}" for row in first_batch])
+        for chunk in split_message(text):
+            sent_message = await bot.send_message(
+                message.from_user.id,
+                text=chunk,
+                reply_markup=btn.gift()
+            )
+            await asyncio.sleep(2)
+            await bot.delete_message(message.from_user.id, sent_message.message_id)
+        
+        # Process subsequent steps by selecting random subsets
+        current_entries = entries
+        for step in steps:
+            current_entries = random.sample(current_entries, step)
+            if step == 1:
+                row = current_entries[0]
+                text = f"🎁 💍 Алтын сақина\n\nID Loto: {row[0]}\nContact: {row[1]}\nData Pay: {row[2]}"
+                await send_pdf_with_caption(message.from_user.id, row[0], text)
+            else:
+                text = "\n\n".join([f"ID Loto: {row[0]}\nContact: {row[1]}\nData Pay: {row[2]}" for row in current_entries])
+                for chunk in split_message(text):
+                    sent_message = await bot.send_message(
+                        message.from_user.id,
+                        text=chunk,
+                        reply_markup=btn.gift()
+                    )
+                    await asyncio.sleep(5)
+                    await bot.delete_message(message.from_user.id, sent_message.message_id)
+            
+            await asyncio.sleep(0.5)
+
+
+@dp.message_handler(Text(equals="🎁 12-ші сыйлық"), content_types=['text'])
+async def handler(message: types.Message):
+    if message.from_user.id in [admin, admin2, admin3]:
+        steps = [50, 25, 10, 1]
+        
+        # Fetch 100 entries initially
+        entries = db.fetch_random_loto_car(100)
+        if not entries:
+            await bot.send_message(
+                message.from_user.id,
+                text="No data available.",
+                reply_markup=btn.gift()
+            )
+            return
+        
+        # Send the first 100 entries as one message
+        first_batch = entries[:100]
+        text = "\n\n".join([f"ID Loto: {row[0]}\nContact: {row[1]}\nData Pay: {row[2]}" for row in first_batch])
+        for chunk in split_message(text):
+            sent_message = await bot.send_message(
+                message.from_user.id,
+                text=chunk,
+                reply_markup=btn.gift()
+            )
+            await asyncio.sleep(2)
+            await bot.delete_message(message.from_user.id, sent_message.message_id)
+        
+        # Process subsequent steps by selecting random subsets
+        current_entries = entries
+        for step in steps:
+            current_entries = random.sample(current_entries, step)
+            if step == 1:
+                row = current_entries[0]
+                text = f"🎁 Алтын білезік\n\nID Loto: {row[0]}\nContact: {row[1]}\nData Pay: {row[2]}"
+                await send_pdf_with_caption(message.from_user.id, row[0], text)
+            else:
+                text = "\n\n".join([f"ID Loto: {row[0]}\nContact: {row[1]}\nData Pay: {row[2]}" for row in current_entries])
+                for chunk in split_message(text):
+                    sent_message = await bot.send_message(
+                        message.from_user.id,
+                        text=chunk,
+                        reply_markup=btn.gift()
+                    )
+                    await asyncio.sleep(5)
+                    await bot.delete_message(message.from_user.id, sent_message.message_id)
+            
+            await asyncio.sleep(0.5)
+
+
+@dp.message_handler(Text(equals="🎁 13-ші сыйлық"), content_types=['text'])
+async def handler(message: types.Message):
+    if message.from_user.id in [admin, admin2, admin3]:
+        steps = [50, 25, 10, 1]
+        
+        # Fetch 100 entries initially
+        entries = db.fetch_random_loto_car(100)
+        if not entries:
+            await bot.send_message(
+                message.from_user.id,
+                text="No data available.",
+                reply_markup=btn.gift()
+            )
+            return
+        
+        # Send the first 100 entries as one message
+        first_batch = entries[:100]
+        text = "\n\n".join([f"ID Loto: {row[0]}\nContact: {row[1]}\nData Pay: {row[2]}" for row in first_batch])
+        for chunk in split_message(text):
+            sent_message = await bot.send_message(
+                message.from_user.id,
+                text=chunk,
+                reply_markup=btn.gift()
+            )
+            await asyncio.sleep(2)
+            await bot.delete_message(message.from_user.id, sent_message.message_id)
+        
+        # Process subsequent steps by selecting random subsets
+        current_entries = entries
+        for step in steps:
+            current_entries = random.sample(current_entries, step)
+            if step == 1:
+                row = current_entries[0]
+                text = f"🎁 Бриллиант жиынтық\n\nID Loto: {row[0]}\nContact: {row[1]}\nData Pay: {row[2]}"
+                await send_pdf_with_caption(message.from_user.id, row[0], text)
+            else:
+                text = "\n\n".join([f"ID Loto: {row[0]}\nContact: {row[1]}\nData Pay: {row[2]}" for row in current_entries])
+                for chunk in split_message(text):
+                    sent_message = await bot.send_message(
+                        message.from_user.id,
+                        text=chunk,
+                        reply_markup=btn.gift()
+                    )
+                    await asyncio.sleep(5)
+                    await bot.delete_message(message.from_user.id, sent_message.message_id)
+            
+            await asyncio.sleep(0.5)
 
 
 async def send_pdf_with_caption(user_id, id_loto, caption):
